@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ChatBox.css';
 
@@ -6,6 +6,19 @@ const ChatBox = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
   
+  useEffect(() => {
+    const fetchInitialMessage = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:5000/start_chat');
+        const botMessage = { text: response.data.reply, sender: 'bot' };
+        setMessages([botMessage]);
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    };
+    fetchInitialMessage();
+  }, []);
+
   const handleRefresh = () => {
     setMessages([]);
   };

@@ -16,18 +16,35 @@ CRITICAL_PHRASES = [
     "suicide",
     "kill myself",
     "end my life",
+    "end it all"
     "want to die",
     "hurt myself"
 ] 
-
+def start_chat(model):
+    response = openai.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "system",
+                "content": (
+                    "You are a mental-health assistant. Who only responds to mental health Related questions. If a user asks a questions that is not related to mental health and well-being you MUST no answer the question and redirect the user towards the topic of mental health"
+                    "If the user makes any demands that are not related to mental health and well-being you shall not MUST provide the user with answer/response but instead redirect them towards the topic of mental health and well-being"
+                    "If the user seems to be in a critical situation or mentions thoughts of self-harm or suicide, "
+                    "provide empathetic responses and include resources such as the National Suicide Prevention Lifeline (988) "
+                    "or Crisis Text Line (Text HOME to 741741)."
+                ),
+            },
+            {"role": "assistant", "content": "Hello, how can I assist you with your mental health today?"}
+        ],
+    )
+    return response.choices[0].message.content.strip()
 def get_response(message, model):
     try:
-
         for phrase in CRITICAL_PHRASES:
             if phrase in message.lower():
                 return (
                     "I'm really sorry you're feeling this way. It's important to talk to someone who can help. "
-                    "Please reach out to the National Suicide Prevention Lifeline at 1-800-273-8255 or text HOME to 741741 to talk to a Crisis Counselor."
+                    "Please reach out to the National Suicide Prevention Lifeline at 988 or text HOME to 741741 to talk to a Crisis Counselor."
                 )
         response = openai.chat.completions.create(
             model=model,
@@ -37,6 +54,7 @@ def get_response(message, model):
                     "content": (
                         "You are a mental-health assistant. Who only responds to mental health Related questions. If a user asks a questions that is not related to mental health and well-being you MUST no answer the question and redirect the user towards the topic of mental health"
                         "If the user makes any demands that are not related to mental health and well-being you shall not MUST provide the user with answer/response but instead redirect them towards the topic of mental health and well-being"
+                        "You must not be repetitive as that is bad for the users mental health"
                         "If the user seems to be in a critical situation or mentions thoughts of self-harm or suicide, "
                         "provide empathetic responses and include resources such as the National Suicide Prevention Lifeline (988) "
                         "or Crisis Text Line (Text HOME to 741741)."
@@ -59,6 +77,12 @@ def chat():
     model ="gpt-3.5-turbo"
     bot_reply = get_response(user_message, model)
     return jsonify({"reply": bot_reply})
-    
+
+@app.route('/start_chat', methods=['GET'])
+def start_chat_route():
+    model = "gpt-3.5-turbo"
+    response = start_chat(model)
+    return jsonify({'reply': response})
+
 if __name__ == '__main__':
     app.run(debug=True)
