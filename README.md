@@ -16,7 +16,6 @@ Therabot is a chatbot that provides therapy services to users. It is designed to
   - [Usage](#usage)
   - [Contributing](#contributing)
   - [License](#license)
-  - [Acknowledgements](#acknowledgements)
 
 ## Demo
 
