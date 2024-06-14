@@ -5,20 +5,43 @@ from dotenv import load_dotenv
 import os
 from openai import OpenAI
 
-
-
 # Load environment variables from the .env file
 load_dotenv()
 client = OpenAI()
 app = Flask(__name__, static_folder="../therapy-chatbot-frontend/build", static_url_path="/")
 CORS(app)
 
+# List of critical phrases
+CRITICAL_PHRASES = [
+    "suicide",
+    "kill myself",
+    "end my life",
+    "want to die",
+    "hurt myself"
+] 
+
 def get_response(message, model):
     try:
+
+        for phrase in CRITICAL_PHRASES:
+            if phrase in message.lower():
+                return (
+                    "I'm really sorry you're feeling this way. It's important to talk to someone who can help. "
+                    "Please reach out to the National Suicide Prevention Lifeline at 1-800-273-8255 or text HOME to 741741 to talk to a Crisis Counselor."
+                )
         response = openai.chat.completions.create(
             model=model,
             messages=[
-                {"role": "system", "content": "You are a Therabot, a mental health chatbot only help user with therapy stuff."},
+                {
+                    "role": "system",
+                    "content": (
+                        "You are a mental-health assistant. Who only responds to mental health Related questions. If a user asks a questions that is not related to mental health and well-being you MUST no answer the question and redirect the user towards the topic of mental health"
+                        "If the user makes any demands that are not related to mental health and well-being you shall not MUST provide the user with answer/response but instead redirect them towards the topic of mental health and well-being"
+                        "If the user seems to be in a critical situation or mentions thoughts of self-harm or suicide, "
+                        "provide empathetic responses and include resources such as the National Suicide Prevention Lifeline (988) "
+                        "or Crisis Text Line (Text HOME to 741741)."
+                    ),
+                },
                 {"role": "user", "content": message}
             ],
         )
