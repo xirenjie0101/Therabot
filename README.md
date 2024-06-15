@@ -6,7 +6,6 @@ Therabot is a chatbot that provides therapy services to users. It is designed to
 
 - [Therapy Chatbot](#therapy-chatbot)
   - [Table of Contents](#table-of-contents)
-  - [Demo](#demo)
   - [Features](#features)
   - [Tech Stack](#tech-stack)
   - [Getting Started](#getting-started)
@@ -134,7 +133,7 @@ Building Therabot was not without its challenges:
   - User Experience: Creating an intuitive and supportive user experience was paramount, and I faced challenges in designing interactions that felt natural and empathetic.
   - Scalability: Ensuring the application could handle multiple users simultaneously without compromising performance was a significant challenge that required optimizing the backend and managing server resources effectively.
 
-## Additional Features and Ehancements
+## Additional Features and Enhancements
 In addition to the core functionalities, I implemented several other features to enhance the user experience and the bot's capabilities:
 
   - Resource Links: Integrated a feature to provide users with links to valuable mental health resources and emergency contacts when critical keywords are detected.
@@ -156,7 +155,8 @@ You can view the live project at [Therabot Live](https://therapy-chatbot-murphy-
 ## Images
 
 **Landing Page**
-![Landing Page](./Landing.PNG)
+![Landing](https://github.com/lawofthedmz/Therabot/assets/99233521/34d73d0e-5a80-4d0b-8c0c-480cc1ca5776)
+
 
 **Chatbox**
-![Landing Page](./ChatBox.PNG)
+![ChatBox](https://github.com/lawofthedmz/Therabot/assets/99233521/b07cce39-0753-41c0-a9f5-9f7d7d6b7dfb)
