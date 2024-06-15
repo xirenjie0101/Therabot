@@ -1,0 +1,15 @@
+{
+    "name": "therapy-chatbot",
+    "version": "1.0.0",
+    "description": "Therabot: Your 24/7 Virtual Therapy Assistant",
+    "scripts": {
+      "start": "cd frontend && npm start",
+      "heroku-postbuild": "cd frontend && npm install && npm run build"
+    },
+    "dependencies": {},
+    "engines": {
+    "node": "21.7.1",
+    "npm": "10.8.1"
+    }
+  }
+  

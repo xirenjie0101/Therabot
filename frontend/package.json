@@ -21,6 +21,10 @@
     "postinstall": "npm run build"
     
   },
+  "engines": {
+    "node": "21.7.1",
+    "npm": "10.8.1"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
