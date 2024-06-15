@@ -67,10 +67,6 @@ def get_response(message, model):
 def index():
     return send_from_directory(app.static_folder, 'index.html')
 
-@app.route('/<path:path>')
-def serve_static_files(path):
-    return send_from_directory(app.static_folder, path)
-
 @app.route('/chat', methods=['POST'])
 def chat():
     user_message = request.json.get('message')

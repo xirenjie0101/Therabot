@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ChatBox.css';
-
+const backendUrl = 'https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/'
 const ChatBox = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
