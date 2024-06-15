@@ -8,7 +8,7 @@ from openai import OpenAI
 # Load environment variables from the .env file
 load_dotenv()
 client = OpenAI()
-app = Flask(__name__, static_folder="../therapy-chatbot-frontend/build", static_url_path="/")
+app = Flask(__name__, static_folder="../frontend/build", static_url_path="/")
 CORS(app)
 
 # List of critical phrases
