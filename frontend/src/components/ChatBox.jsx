@@ -9,7 +9,7 @@ const ChatBox = () => {
   useEffect(() => {
     const fetchInitialMessage = async () => {
       try {
-        const response = await axios.get('${backendURL}/start_chat');
+        const response = await axios.get('/start_chat');
         const botMessage = { text: response.data.reply, sender: 'bot' };
         setMessages([botMessage]);
       } catch (error) {
@@ -31,7 +31,7 @@ const ChatBox = () => {
       setInput('');
 
       try {
-        const response = await axios.post('${backendURL}/chat', { message: input });
+        const response = await axios.post('/chat', { message: input });
         const botMessage = { text: response.data.reply, sender: 'bot' };
         setMessages(prevMessages => [...prevMessages, botMessage]);
       } catch (error) {
