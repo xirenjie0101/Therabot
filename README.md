@@ -26,10 +26,6 @@ Therabot is a chatbot that provides therapy services to users. It is designed to
   - [Project Link](#project-link)
   - [Images](#images)
 
-## Demo
-
-Add a link to your live demo or a screenshot of the application here.
-
 ## Features
 
 - Real-time chat with a therapy chatbot
@@ -42,6 +38,8 @@ Add a link to your live demo or a screenshot of the application here.
 - **Backend:** Flask, OpenAI API
 - **Frontend:** React, Tailwind CSS, Axios
 - **Environment Management:** dotenv
+- **Deployment:** heroku
+
 
 ## Getting Started
 
@@ -153,3 +151,12 @@ Despite the challenges, building Therabot was an incredibly rewarding experience
 
 ## Project Link
 You can view the live project at [Therabot Live](https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/). If the project is down, please email me at [murphg04@gmail.com](mailto:murphgo4@gmail.com), and I will redeploy it for you to test.
+
+
+## Images
+
+**Landing Page**
+![Landing Page](./Landing.PNG)
+
+**Chatbox**
+![Landing Page](./ChatBox.PNG)
