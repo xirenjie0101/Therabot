@@ -27,8 +27,7 @@ def start_chat(model):
             {
                 "role": "system",
                 "content": (
-                    "You are a mental-health assistant. Who only is introducing themself to the user."
-                    
+                    "You are a mental-health assistant. Who only is introducing themself to the user."           
                 ),
             },
             {"role": "assistant", "content": "Hello, how can I assist you with your mental health today?"}
