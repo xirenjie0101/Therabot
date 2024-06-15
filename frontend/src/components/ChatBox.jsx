@@ -2,10 +2,31 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ChatBox.css';
 const backendUrl = 'https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/'
+/**
+ * Represents a chat box component.
+ *
+ * @component
+ * @example
+ * return (
+ *   <ChatBox />
+ * )
+ */
 const ChatBox = () => {
+  /**
+   * State and setter for input field
+   * @type {[string, function]} input - State for input field
+   */
   const [input, setInput] = useState('');
+
+   /**
+   * State and setter for messages
+   * @type {[Array, function]} messages - State for chat messages
+   */
   const [messages, setMessages] = useState([]);
   
+  /**
+   * Fetch initial message from server when component mounts
+   */
   useEffect(() => {
     const fetchInitialMessage = async () => {
       try {
@@ -19,10 +40,17 @@ const ChatBox = () => {
     fetchInitialMessage();
   }, []);
 
+  /**
+   * Handle refresh button click
+   */
   const handleRefresh = () => {
     setMessages([]);
   };
 
+  /**
+   * Handle send button click or form submission
+   * @param {Event} e - Event
+   */
   const handleSend = async (e) => {
     e.preventDefault(); // Prevent the form from submitting
     if (input.trim()) {

@@ -21,6 +21,15 @@ CRITICAL_PHRASES = [
     "hurt myself"
 ] 
 def start_chat(model):
+    """
+    Starts a chat with the OpenAI model.
+
+    Args:
+        model (str): The ID of the OpenAI model to use.
+
+    Returns:
+        str: The content of the initial message from the assistant.
+    """
     response = openai.chat.completions.create(
         model=model,
         messages=[
@@ -35,6 +44,16 @@ def start_chat(model):
     )
     return response.choices[0].message.content.strip()
 def get_response(message, model):
+    """
+    Gets a response from the OpenAI model.
+
+    Args:
+        message (str): The message from the user.
+        model (str): The ID of the OpenAI model to use.
+
+    Returns:
+        str: The response from the assistant.
+    """
     try:
         for phrase in CRITICAL_PHRASES:
             if phrase in message.lower():
@@ -63,6 +82,7 @@ def get_response(message, model):
     except Exception as e:
         return f"An error occurred: {e}"
 
+"""Routing Endpoints"""
 @app.route('/')
 def index():
     return send_from_directory(app.static_folder, 'index.html')
