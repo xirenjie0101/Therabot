@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './ChatBox.css';
-
+const backendUrl = 'https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/'
 const ChatBox = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([]);
@@ -9,7 +9,7 @@ const ChatBox = () => {
   useEffect(() => {
     const fetchInitialMessage = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:5000/start_chat');
+        const response = await axios.get('${backendURL}/start_chat');
         const botMessage = { text: response.data.reply, sender: 'bot' };
         setMessages([botMessage]);
       } catch (error) {
@@ -31,7 +31,7 @@ const ChatBox = () => {
       setInput('');
 
       try {
-        const response = await axios.post('http://127.0.0.1:5000/chat', { message: input });
+        const response = await axios.post('${backendURL}/chat', { message: input });
         const botMessage = { text: response.data.reply, sender: 'bot' };
         setMessages(prevMessages => [...prevMessages, botMessage]);
       } catch (error) {
