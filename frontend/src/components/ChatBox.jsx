@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ChatBox.css';
-const backendUrl = 'https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/'
+import './ChatBox.css';import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+
 /**
  * Represents a chat box component.
  *
@@ -68,6 +68,7 @@ const ChatBox = () => {
    */
   const handleRefresh = () => {
     setMessages([]);
+    resetTranscript();
   };
 
   /**
@@ -94,29 +95,43 @@ const ChatBox = () => {
     }
   };
 
-if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-  return null;
-}
-
-const startListening = () => {
-  setIsListening(true);
-  SpeechRecognition.startListening({
-    continuous: true,
-  });
-};
-
-const stopListening = () => {
-  setIsListening(false);
-  SpeechRecognition.stopListening();
-};
-
-const handleVoiceInput = () => {
-  if (isListening) {
-    stopListening();
-  } else {
-    startListening();
+  /**
+   * Check if the browser supports Speech Recognition
+   * @returns {boolean}
+   */
+  if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+    return null;
   }
-};
+
+  /**
+   * Start voice recognition
+   */
+  const startListening = () => {
+    setIsListening(true);
+    SpeechRecognition.startListening({
+      continuous: true,
+    });
+  };
+
+  /**
+   * Stop voice recognition
+   */
+  const stopListening = () => {
+    setIsListening(false);
+    SpeechRecognition.stopListening();
+  };
+
+  /**
+   * Handle voice input
+   */
+  const handleVoiceInput = () => {
+    if (isListening) {
+      stopListening();
+      handleSend({ preventDefault: () => {} });
+    } else {
+      startListening();
+    }
+  };
 
   /**
    * Speak the given text
@@ -178,7 +193,12 @@ const handleVoiceInput = () => {
               <button className="bg-blue-600 text-white rounded-r-md px-4">Send</button>
             </form>
             <button className="bg-green-600 text-white rounded-md px-4 ml-2" onClick={handleRefresh}>Refresh</button>
-            <button className="bg-yellow-600 text-white rounded-md px-4 ml-2" onClick={handleVoiceInput}>🎤</button>
+            <button className="bg-yellow-600 text-white rounded-md px-4 ml-2" onClick={handleVoiceInput}>
+              {isListening ? 'Stop Listening' : 'Start Listening'}
+            </button>
+            <button className={`bg-${isVoiceEnabled ? 'red' : 'blue'}-600 text-white rounded-md px-4 ml-2`} onClick={toggleVoice}>
+              {isVoiceEnabled ? 'Disable Voice' : 'Enable Voice'}
+            </button>
           </div>
         </div>
       </div>
