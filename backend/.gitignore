@@ -7,3 +7,5 @@ venv/
 # Ignore typical 
 __pycache__/
 *.pyc
+openai-env/
+openai-venv/
