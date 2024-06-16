@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './ChatBox.css';import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
+import './ChatBox.css';
+import SpeechRecognition, { useSpeechRecognition } from 'react-speech-recognition';
 
 /**
  * Represents a chat box component.
@@ -45,21 +46,27 @@ const ChatBox = () => {
   const { transcript, resetTranscript } = useSpeechRecognition();
 
   /**
-   * Fetch initial message from server when component mounts
+   * Fetch initial message
+   * @returns {Promise<void>}
+   * @async
    */
-  useEffect(() => {
-    const fetchInitialMessage = async () => {
-      try {
-        const response = await axios.get('https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/start_chat');
-        const botMessage = { text: response.data.reply, sender: 'bot' };
-        setMessages([botMessage]);
-        if (isVoiceEnabled) {
-          speak(botMessage.text);
-        }
-      } catch (error) {
-        console.error('Error:', error);
+  const fetchInitialMessage = async () => {
+    try {
+      const response = await axios.get('https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/start_chat');
+      const botMessage = { text: response.data.reply, sender: 'bot' };
+      setMessages([botMessage]);
+      if (isVoiceEnabled) {
+        speak(botMessage.text);
       }
-    };
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+  
+  /**
+   * Fetch initial message
+    */
+  useEffect(() => {
     fetchInitialMessage();
   }, [isVoiceEnabled]);
 
@@ -69,6 +76,7 @@ const ChatBox = () => {
   const handleRefresh = () => {
     setMessages([]);
     resetTranscript();
+    fetchInitialMessage();
   };
 
   /**
@@ -100,13 +108,13 @@ const ChatBox = () => {
    * @returns {boolean}
    */
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    return null;
-  }
+    return <div>Your browser does not support Speech Recognition.</div>;  }
 
   /**
    * Start voice recognition
    */
   const startListening = () => {
+    resetTranscript();
     setIsListening(true);
     SpeechRecognition.startListening({
       continuous: true,
@@ -127,6 +135,7 @@ const ChatBox = () => {
   const handleVoiceInput = () => {
     if (isListening) {
       stopListening();
+      setInput(transcript);
       handleSend({ preventDefault: () => {} });
     } else {
       startListening();
