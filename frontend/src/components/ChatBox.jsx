@@ -120,6 +120,8 @@ const ChatBox = () => {
             <li>Search for <code>media.webspeech.recognition.enable</code>.</li>
             <li>Set it to <code>true</code>.</li>
             <li>Refresh the page.</li>
+            <li></li>
+            <li>WARNING: This is not recomended and isnt a 100% fix so please use other browser</li>
           </ol>
         </div>
       </div>
