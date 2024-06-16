@@ -108,7 +108,23 @@ const ChatBox = () => {
    * @returns {boolean}
    */
   if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    return <div>Your browser does not support Speech Recognition.</div>;  }
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="flex flex-col items-center">
+          <p className="text-center mb-4">
+            Your browser (Firefox most commonly) does not support Speech Recognition. 
+            You can either switch browsers or follow these next steps:
+          </p>
+          <ol className="text-center">
+            <li>Go to <code>about:config</code> in the address bar.</li>
+            <li>Search for <code>media.webspeech.recognition.enable</code>.</li>
+            <li>Set it to <code>true</code>.</li>
+            <li>Refresh the page.</li>
+          </ol>
+        </div>
+      </div>
+    );
+  }
 
   /**
    * Start voice recognition
