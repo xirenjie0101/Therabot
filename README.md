@@ -31,6 +31,7 @@ Therabot is a chatbot that provides therapy services to users. It is designed to
 - Natural language processing using OpenAI's GPT-3.5-turbo
 - 24/7 availability
 - Helps users work through stress, anxiety, depression, and more
+- - **New:** Voice interaction capabilities for a more natural communication experience
 
 ## Tech Stack
 
@@ -94,6 +95,7 @@ Open your browser and navigate to http://localhost3000.
 - Navigate to the homepage.
 - Click on the "Get started" button.
 - Start chatting with Therabot by typing your message and hitting "Send".
+- Use the voice interaction feature to communicate with Therabot more naturally.
 
 ## Contributing
 Contributions are welcome! Please fork the repository and create a pull request with your changes.
@@ -137,14 +139,13 @@ Building Therabot was not without its challenges:
 In addition to the core functionalities, I implemented several other features to enhance the user experience and the bot's capabilities:
 
   - Resource Links: Integrated a feature to provide users with links to valuable mental health resources and emergency contacts when critical keywords are detected.
+  - Voice Interaction: Implemented voice interaction capabilities using Web Speech API for a more natural and convenient way for users to communicate with Therabot.
 
 ## Future Enhancements
 Looking forward, I plan to introduce several enhancements to Therabot:
 
   - Advanced Analytics: Implementing analytics to track user interactions and gather insights to improve the bot's performance and effectiveness continually.
-    like WhatsApp, Facebook Messenger, and more.
-   -  Voice Interaction: Introducing voice interaction capabilities to provide a more natural and convenient way for users to communicate with Therabot.
-
+  - 
 ## Conclusion
 Despite the challenges, building Therabot was an incredibly rewarding experience. I hope that this project can provide valuable support to those in need and contribute positively to the mental health landscape. With continued development and enhancements, Therabot has the potential to become a robust tool for mental health support, making a meaningful impact on people's lives.
 
@@ -158,5 +159,7 @@ You can view the live project at [Therabot Live](https://therapy-chatbot-murphy-
 ![Landing](https://github.com/lawofthedmz/Therabot/assets/99233521/34d73d0e-5a80-4d0b-8c0c-480cc1ca5776)
 
 
-**Chatbox**
-![ChatBox](https://github.com/lawofthedmz/Therabot/assets/99233521/b07cce39-0753-41c0-a9f5-9f7d7d6b7dfb)
+**Chatbox*
+![ChatBox](https://github.com/lawofthedmz/Therabot/assets/99233521/495d4d71-58ce-4993-84a5-b1c4429da30f)
+*
+
