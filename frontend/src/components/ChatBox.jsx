@@ -31,6 +31,20 @@ const ChatBox = () => {
   const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   
   /**
+   * State and setter for voice recognition
+   * @type {[boolean, function]} isListening - State for voice recognition
+   * @default false
+    */
+  const [isListening, setIsListening] = useState(false);
+
+  /**
+   * State and setter for voice recognition
+   * @type {[string, function]} transcript - State for voice recognition
+   * @default ''
+   */
+  const { transcript, resetTranscript } = useSpeechRecognition();
+
+  /**
    * Fetch initial message from server when component mounts
    */
   useEffect(() => {
@@ -80,21 +94,29 @@ const ChatBox = () => {
     }
   };
 
-  /**
-   * Speak the given text
-   * @param {string} text - Text to speak
-   * @returns {Promise<void>}
-   */
-  const handleVoiceInput = () => {
-    const recognition = new window.webkitSpeechRecognition();
-    recognition.lang = 'en-US';
-    recognition.start();
-    recognition.onresult = (event) => {
-      const transcript = event.results[0][0].transcript;
-      setInput(transcript);
-      handleSend({ preventDefault: () => {} });
-    };
-  };
+if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
+  return null;
+}
+
+const startListening = () => {
+  setIsListening(true);
+  SpeechRecognition.startListening({
+    continuous: true,
+  });
+};
+
+const stopListening = () => {
+  setIsListening(false);
+  SpeechRecognition.stopListening();
+};
+
+const handleVoiceInput = () => {
+  if (isListening) {
+    stopListening();
+  } else {
+    startListening();
+  }
+};
 
   /**
    * Speak the given text
@@ -157,9 +179,6 @@ const ChatBox = () => {
             </form>
             <button className="bg-green-600 text-white rounded-md px-4 ml-2" onClick={handleRefresh}>Refresh</button>
             <button className="bg-yellow-600 text-white rounded-md px-4 ml-2" onClick={handleVoiceInput}>🎤</button>
-            <button className={`bg-${isVoiceEnabled ? 'red' : 'blue'}-600 text-white rounded-md px-4 ml-2`} onClick={toggleVoice}>
-              {isVoiceEnabled ? 'Disable Voice' : 'Enable Voice'}
-            </button>
           </div>
         </div>
       </div>
