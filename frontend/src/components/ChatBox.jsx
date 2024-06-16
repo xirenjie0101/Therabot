@@ -23,6 +23,12 @@ const ChatBox = () => {
    * @type {[Array, function]} messages - State for chat messages
    */
   const [messages, setMessages] = useState([]);
+
+  /**
+ * State and setter for voice recognition
+ * @type {[boolean, function]} isVoiceEnabled - State for voice recognition
+ */
+  const [isVoiceEnabled, setIsVoiceEnabled] = useState(false);
   
   /**
    * Fetch initial message from server when component mounts
@@ -33,12 +39,15 @@ const ChatBox = () => {
         const response = await axios.get('https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/start_chat');
         const botMessage = { text: response.data.reply, sender: 'bot' };
         setMessages([botMessage]);
+        if (isVoiceEnabled) {
+          speak(botMessage.text);
+        }
       } catch (error) {
         console.error('Error:', error);
       }
     };
     fetchInitialMessage();
-  }, []);
+  }, [isVoiceEnabled]);
 
   /**
    * Handle refresh button click
@@ -62,10 +71,46 @@ const ChatBox = () => {
         const response = await axios.post('https://therapy-chatbot-murphy-24161ebc687d.herokuapp.com/chat', { message: input });
         const botMessage = { text: response.data.reply, sender: 'bot' };
         setMessages(prevMessages => [...prevMessages, botMessage]);
+        if (isVoiceEnabled) {
+          speak(botMessage.text);
+        }
       } catch (error) {
         console.error('Error:', error);
       }
     }
+  };
+
+  /**
+   * Speak the given text
+   * @param {string} text - Text to speak
+   * @returns {Promise<void>}
+   */
+  const handleVoiceInput = () => {
+    const recognition = new window.webkitSpeechRecognition();
+    recognition.lang = 'en-US';
+    recognition.start();
+    recognition.onresult = (event) => {
+      const transcript = event.results[0][0].transcript;
+      setInput(transcript);
+      handleSend({ preventDefault: () => {} });
+    };
+  };
+
+  /**
+   * Speak the given text
+   * @param {string} text - Text to speak
+   * @returns {void}
+    */
+  const speak = (text) => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
+  };
+
+  /**
+   * Toggle voice recognition
+   */
+  const toggleVoice = () => {
+    setIsVoiceEnabled(!isVoiceEnabled);
   };
 
   return (
@@ -111,6 +156,10 @@ const ChatBox = () => {
               <button className="bg-blue-600 text-white rounded-r-md px-4">Send</button>
             </form>
             <button className="bg-green-600 text-white rounded-md px-4 ml-2" onClick={handleRefresh}>Refresh</button>
+            <button className="bg-yellow-600 text-white rounded-md px-4 ml-2" onClick={handleVoiceInput}>🎤</button>
+            <button className={`bg-${isVoiceEnabled ? 'red' : 'blue'}-600 text-white rounded-md px-4 ml-2`} onClick={toggleVoice}>
+              {isVoiceEnabled ? 'Disable Voice' : 'Enable Voice'}
+            </button>
           </div>
         </div>
       </div>
